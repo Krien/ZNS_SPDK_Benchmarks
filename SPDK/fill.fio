@@ -1,0 +1,18 @@
+[global]
+ioengine=spdk
+thread=1
+group_reporting=1
+direct=1
+size=100%
+bs=16kb
+rw=write
+iodepth=1
+zonemode=zbd
+max_open_zones=14
+initial_zone_reset=1
+filename=trtype=PCIe traddr=0000.00.04.0 ns=2
+
+[fill]
+stonewall
+offset_increment=10%
+numjobs=10
