@@ -80,11 +80,12 @@ x2 = ['25%', '50%', '75%', '99%', '99.9%',
 y2 = [4.82,  6.51, 8.79, 27.84, 1260.93, 2677.10, 4440.59, 6504.38, 11402]
 x3 = ['25%', '50%', '75%', '99%', '99.9%',
       '99.99%', '99.999%', '99.9999%', '100%']
-y3 = [4.31,  5.62, 9.32, 355.89, 906.2, 1272.77, 1921.25, 11914.31, 1128431255]
+y3 = [3.63,  4.78, 5.93, 899.42, 1285.15, 1846.76, 2896.25, 16646.15, 1083071035]
+
 
 # plt.yscale('log')
 for i, j in enumerate([(100000, 6), (100000, 8), (10000000000, 9)]):
-    plt.rcParams["figure.figsize"] = (6, 6)
+    plt.rcParams["figure.figsize"] = (7.5, 6)
     fig, ax = plt.subplots()
     plt.xlabel("Percentile")
     plt.ylabel("Latency (μs)")
@@ -94,11 +95,11 @@ for i, j in enumerate([(100000, 6), (100000, 8), (10000000000, 9)]):
     # plt.ylim(1, 500000)
     plt.plot(x1[:j[1]], y1[:j[1]], marker='o', label='RocksDB + F2FS')
     plt.plot(x2[:j[1]], y2[:j[1]], marker='D', label='RocksDB + ZenFS')
-    plt.plot(x3[:j[1]], y3[:j[1]], marker='x', label='ZNSLSM')
+    plt.plot(x3[:j[1]], y3[:j[1]], marker='x', label='TropoDB')
     plt.legend()
     fig.savefig("out/latency_fillrandom" + str(i) + ".png")
-# fig.savefig("out/latency_fillrandom_no_log.png")
-plt.close()
+    fig.savefig("out/latency_fillrandom" + str(i) + ".svg")
+    plt.close()
 
 fig, ax = plt.subplots()
 boxes = [
@@ -139,10 +140,12 @@ plt.close()
 
 # latency filloverwrite
 fig, ax = plt.subplots()
-x1 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%']
-y1 = [6.60,  8.63, 11.46, 33.26, 1245.00, 1617.83, 7419.67, 16785.65]
-x2 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%']
-y2 = [4.77,  6.43, 8.81, 42.78, 1271.51, 2523.26, 4207.22, 6261.71]
+x1 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%', '100%']
+y1 = [6.60,  8.63, 11.46, 33.26, 1245.00, 1617.83, 7419.67, 16785.65, 680503]
+x2 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%', '100%']
+y2 = [4.77,  6.43, 8.81, 42.78, 1271.51, 2523.26, 4207.22, 6261.71, 966438]
+x3 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%', '100%']
+y3 = [3.84,  5.00, 6.50, 1075.42, 1293.39, 1875.60, 3321.77, 16752.52, 1004201751]
 plt.xlabel("Percentile")
 plt.ylabel("Latency (μs)")
 plt.title("Tail latency: 1TB of overwrites")
@@ -151,10 +154,29 @@ plt.ylim(1, 500000)
 # plt.ylim(1, 20000)
 plt.plot(x1, y1, marker='o', label='RocksDB + F2FS')
 plt.plot(x2, y2, marker='D', label='RocksDB + ZenFS')
+plt.plot(x3, y3, marker='x', label='TropoDB')
 plt.legend()
 fig.savefig("out/latency_filloverwrite.png")
 # fig.savefig("out/latency_filloverwrite_no_log.png")
 plt.close()
+
+for i, j in enumerate([(100000, 6), (100000, 8), (10000000000, 9)]):
+    plt.rcParams["figure.figsize"] = (7.5, 6)
+    fig, ax = plt.subplots()
+    plt.xlabel("Percentile")
+    plt.ylabel("Latency (μs)")
+    plt.title("Put Operation tail latency: 1TB of filloverwrite")
+    plt.ylim(1, j[0])
+    plt.yscale('log')
+    # plt.ylim(1, 500000)
+    plt.plot(x1[:j[1]], y1[:j[1]], marker='o', label='RocksDB + F2FS')
+    plt.plot(x2[:j[1]], y2[:j[1]], marker='D', label='RocksDB + ZenFS')
+    plt.plot(x3[:j[1]], y3[:j[1]], marker='x', label='TropoDB')
+    plt.legend()
+    fig.savefig("out/latency_filloverwrite" + str(i) + ".png")
+    fig.savefig("out/latency_filloverwrite" + str(i) + ".svg")
+    plt.close()
+
 
 fig, ax = plt.subplots()
 boxes = [
@@ -186,20 +208,21 @@ plt.close()
 
 # latency readwhilewriting
 fig, ax = plt.subplots()
-x1 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%']
-y1 = [208.15,  288.56, 425.44, 1436.22, 2996.52, 9847.09, 43180.63,  485539.24]
-x2 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%']
-y2 = [498.92,  667.68, 835.74, 2030.84, 3053.67, 4326.67, 6182.68, 6824.24]
+x1 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%', '100%']
+y1 = [208.15,  288.56, 425.44, 1436.22, 2996.52, 9847.09, 43180.63,  485539.24, 0]
+x2 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%', '100%']
+y2 = [498.92,  667.68, 835.74, 2030.84, 3053.67, 4326.67, 6182.68, 6824.24, 24820]
 plt.xlabel("Percentile")
 plt.ylabel("Latency (μs)")
-plt.title("Tail latency: 1 hour of reads while writing")
+plt.title("Put operation tail latency: 1 hour of reads while writing")
 plt.yscale('log')
 plt.ylim(1, 500000)
 # plt.ylim(1, 800000)
-plt.plot(x1, y1, marker='o', label='RocksDB + F2FS')
-plt.plot(x2, y2, marker='D', label='RocksDB + ZenFS')
+plt.plot(x1[:-1], y1[:-1], marker='o', label='RocksDB + F2FS')
+plt.plot(x2[:-1], y2[:-1], marker='D', label='RocksDB + ZenFS')
 plt.legend()
 fig.savefig("out/latency_readwhilewriting.png")
+fig.savefig("out/latency_readwhilewriting.svg")
 # fig.savefig("out/latency_readwhilewriting_no_log.png")
 plt.close()
 
@@ -227,6 +250,6 @@ boxes = [
 plt.ylim(0, 1500)
 ax.bxp(boxes, showfliers=False)
 ax.set_ylabel("Latency (μs)")
-plt.title("Latency: 1 hour of reads while writing")
+plt.title("Put operation tail latency: 1 hour of reads while writing")
 plt.savefig("out/boxplot_latency_readwhilewriting.png")
 plt.close()

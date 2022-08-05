@@ -71,6 +71,40 @@ plt.savefig("out/barplot_wal_iops.png")
 plt.savefig("out/barplot_wal_iops.svg")
 plt.close()
 
+
+# Synchr
+values = [24542, 24517, 33638, 32887]  # 33638, 55058, 32887
+plt.bar([1, 2, 3, 4], [value / 1000 for value in values],
+        width=0.125, label="QD 1")
+# 2
+values = [24579, 24580, 56265, 31769]  # 56265, 58221, 31769
+plt.bar([1.125, 2.125, 3.125, 4.125], [value / 1000 for value in values],
+        width=0.125, label="QD 2")
+# 16
+values = [24260, 24261, 61680, 32342]  # 61680, 59828, 31863
+plt.bar([1.25, 2.25, 3.25, 4.25], [value / 1000 for value in values],
+        width=0.125, label="QD 4")
+# 32
+values = [24258, 24263, 61819, 31863]  # 61819, 60622, 31863
+plt.bar([1.375, 2.375, 3.375, 4.375], [value / 1000 for value in values],
+        width=0.125, label="QD 16")
+# 64
+values = [24262, 24261, 61763, 32930]  # 61763, 60222, 32930
+plt.bar([1.5, 2.5, 3.5, 4.5], [value / 1000 for value in values],
+        width=0.125, label="QD 64")
+
+plt.ylim(0, 80000 / 1000)
+plt.xlabel("Value size in bytes")
+plt.ylabel("KIOPS")
+plt.xticks([1.25, 2.25, 3.25, 4.25],
+           ['200', '400', '8000', '32000'])
+plt.title("Average KIOPS while writing 10GB to the WAL")
+plt.legend(ncol=1)
+plt.savefig("out/barplot_wal_iops_2.png")
+plt.savefig("out/barplot_wal_iops_2.svg")
+plt.close()
+
+
 fig, ax = plt.subplots()
 # plt.figure(figsize=(12, 12))
 # Synchr
@@ -108,6 +142,46 @@ plt.title(
 plt.legend(loc='upper left', ncol=1)
 plt.savefig("out/barplot_wal_latency.png")
 plt.savefig("out/barplot_wal_latency.svg")
+plt.close()
+
+
+fig, ax = plt.subplots()
+# plt.figure(figsize=(12, 12))
+# Synchr
+stdef = [24.39, 24.40, 5.13, 19.91]
+values = [36.7812, 36.6876, 25.8135, 24.2820]  # 33638, 55058, 32887
+plt.bar([1, 2, 3, 4], values, width=0.125,
+        label="QD 1", yerr=stdef)
+# 4
+stdef = [27.71, 27.72, 9.38, 27.77]
+values = [36.7517, 36.7893, 13.8938, 23.7364]  # 61819, 60622, 32342
+plt.bar([1.125, 2.125, 3.125, 4.125], values, width=0.125,
+        label="QD 2", yerr=stdef)
+# 16
+stdef = [28.50, 28.51, 9.92, 42.46]
+values = [37.2091, 37.3633, 12.3287, 23.8656]  # 61680, 59828, 31863
+plt.bar([1.25, 2.25, 3.25, 4.25], values, width=0.125,
+        label="QD 4", yerr=stdef)
+# 32
+stdef = [28.53, 28.53,  9.11, 35.59]
+values = [37.2161, 37.3322, 12.2958, 23.8632]  # 61819, 60622, 31863
+plt.bar([1.375, 2.375, 3.375, 4.375], values, width=0.125,
+        label="QD 16", yerr=stdef)
+# 64
+stdef = [28.66, 28.70, 10.09, 68.29]
+values = [36.9769, 37.2053, 12.3650, 24.3204]  # 61763, 60222, 32930
+plt.bar([1.5, 2.5, 3.5, 4.5], values, width=0.125, label="QD 64", yerr=stdef)
+
+plt.ylim(0, 100)
+plt.xlabel("Value size (bytes)")
+plt.ylabel("Completion time (μs)")
+plt.xticks([1.25, 2.25, 3.25, 4.25],
+           ['200', '400', '8000', '32000'])
+plt.title(
+    "Average completion time of WAL appends")
+plt.legend(loc='upper left', ncol=1)
+plt.savefig("out/barplot_wal_latency_2.png")
+plt.savefig("out/barplot_wal_latency_2.svg")
 plt.close()
 
 
