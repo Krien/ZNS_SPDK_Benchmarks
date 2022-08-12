@@ -138,6 +138,37 @@ ax.set_ylabel("Latency (μs)")
 plt.savefig("out/boxplot_latency_random.png")
 plt.close()
 
+# latency fillrandom L0 circular log size
+x1 = ['25%', '50%', '75%', '99%', '99.9%',
+      '99.99%', '99.999%', '99.9999%', '100%']
+y1 = [3.80,  4.96, 6.30, 13.86, 1257.25, 1820.63, 2508.78, 15393.26, 1033125768]
+x2 = ['25%', '50%', '75%', '99%', '99.9%',
+      '99.99%', '99.999%', '99.9999%', '100%']
+y2 = [3.63,  4.78, 5.93, 899.42, 1285.15, 1846.76, 2896.25, 16646.15, 1083071035]
+x3 = ['25%', '50%', '75%', '99%', '99.9%',
+      '99.99%', '99.999%', '99.9999%', '100%']
+y3 = [4.02,  5.26, 7.30, 1095.63, 1292.34, 1861.48, 3453.07, 17038.38, 833132106]
+
+# plt.yscale('log')
+for i, j in enumerate([(100000, 6), (100000, 8), (10000000000, 9)]):
+    plt.rcParams["figure.figsize"] = (7.5, 6)
+    fig, ax = plt.subplots()
+    plt.xlabel("Percentile")
+    plt.ylabel("Latency (μs)")
+    plt.title("Put Operation tail latency TropoDB: 1TB of fillrandom")
+    plt.ylim(1, j[0])
+    plt.yscale('log')
+    # plt.ylim(1, 500000)
+    plt.plot(x1[:j[1]], y1[:j[1]], marker='o', label='L0  50 zones')
+    plt.plot(x2[:j[1]], y2[:j[1]], marker='D', label='L0 100 zones')
+    plt.plot(x3[:j[1]], y3[:j[1]], marker='x', label='L0 200 zones')
+    plt.legend()
+    fig.savefig("out/latency_fillrandom_tropodb_l0" + str(i) + ".png")
+    fig.savefig("out/latency_fillrandom_tropodb_l0" + str(i) + ".svg")
+    plt.close()
+
+
+
 # latency filloverwrite
 fig, ax = plt.subplots()
 x1 = ['25%', '50%', '75%', '99%', '99.9%', '99.99%', '99.999%', '99.9999%', '100%']
@@ -205,6 +236,37 @@ ax.set_ylabel("Latency (μs)")
 plt.title("Latency: 1TB of overwrites")
 plt.savefig("out/boxplot_latency_overwrite.png")
 plt.close()
+
+# latency fillrandom L0 circular log size
+x1 = ['25%', '50%', '75%', '99%', '99.9%',
+      '99.99%', '99.999%', '99.9999%', '100%']
+y1 = [3.96,  5.12, 6.83, 16.02, 1279.15, 1832.70, 2701.47, 10997.47, 1556650243]
+x2 = ['25%', '50%', '75%', '99%', '99.9%',
+      '99.99%', '99.999%', '99.9999%', '100%']
+y2 = [3.84,  5.00, 6.50, 1075.42, 1293.39, 1875.60, 3321.77, 16752.52, 1004201751]
+x3 = ['25%', '50%', '75%', '99%', '99.9%',
+      '99.99%', '99.999%', '99.9999%', '100%']
+y3 = [3.99,  5.20, 7.22, 1192.54, 1297.31, 2304.20, 4005.62, 20924.09, 1242891603]
+
+# plt.yscale('log')
+for i, j in enumerate([(100000, 6), (100000, 8), (10000000000, 9)]):
+    plt.rcParams["figure.figsize"] = (7.5, 6)
+    fig, ax = plt.subplots()
+    plt.xlabel("Percentile")
+    plt.ylabel("Latency (μs)")
+    plt.title("Put Operation tail latency TropoDB: 1TB of filloverwrite")
+    plt.ylim(1, j[0])
+    plt.yscale('log')
+    # plt.ylim(1, 500000)
+    plt.plot(x1[:j[1]], y1[:j[1]], marker='o', label='L0  50 zones')
+    plt.plot(x2[:j[1]], y2[:j[1]], marker='D', label='L0 100 zones')
+    plt.plot(x3[:j[1]], y3[:j[1]], marker='x', label='L0 200 zones')
+    plt.legend()
+    fig.savefig("out/latency_filloverwrite_tropodb_l0" + str(i) + ".png")
+    fig.savefig("out/latency_filloverwrite_tropodb_l0" + str(i) + ".svg")
+    plt.close()
+
+
 
 # latency readwhilewriting
 fig, ax = plt.subplots()
