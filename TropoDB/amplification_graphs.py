@@ -33,7 +33,7 @@ def plot_write_amplification_filloverwrite():
     labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
     values = [smartbytes(x)
           for x in [(1624911408 - 1593186755), (1565335235 - 1530804210)]] + [21261503265792]
-    plot_write_amplification('FillOverwrite 1TB: Average WA for each key-value pai', 'barplot_writes_per_put_overwrite',
+    plot_write_amplification('FillOverwrite 1TB: Average WA for each key-value pair', 'barplot_writes_per_put_overwrite',
         labs, values, 1000000000*1016)
 
 def plot_write_amplification_filloverwrite_L0_circular_log():
