@@ -1,0 +1,115 @@
+# Running db_bench with parameters:  --db=/mnt/f2fs/db0 --wal_dir=/mnt/f2fs/wal0 --num=1000000000 --compression_type=none --value_size=1000 --key_size=16 --use_direct_io_for_flush_and_compaction --use_direct_reads --max_bytes_for_level_multiplier=4 --max_background_jobs=8 --target_file_size_base=1129316352 --write_buffer_size=2147483648  --histogram  --benchmarks=readwhilewriting --use_existing_db --threads=32 --duration=3600 --benchmark_write_rate_limit=10485760
+{
+  "critical_warning":0,
+  "temperature":317,
+  "avail_spare":100,
+  "spare_thresh":10,
+  "percent_used":3,
+  "endurance_grp_critical_warning_summary":0,
+  "data_units_read":1420343563.0,
+  "data_units_written":1624911408.0,
+  "host_read_commands":4953508470.0,
+  "host_write_commands":15185032801.0,
+  "controller_busy_time":43035.0,
+  "power_cycles":4.0,
+  "power_on_hours":6975.0,
+  "unsafe_shutdowns":2.0,
+  "media_errors":0.0,
+  "num_err_log_entries":135940.0,
+  "warning_temp_time":0,
+  "critical_comp_time":0,
+  "temperature_sensor_1":314,
+  "temperature_sensor_2":313,
+  "temperature_sensor_3":318,
+  "thm_temp1_trans_count":0,
+  "thm_temp2_trans_count":0,
+  "thm_temp1_total_time":0,
+  "thm_temp2_total_time":0
+}
+Initializing RocksDB Options from the specified file
+Initializing RocksDB Options from command-line flags
+Keys:       16 bytes each (+ 0 bytes user-defined timestamp)
+Values:     1000 bytes each (500 bytes after compression)
+Entries:    1000000000
+Prefix:    0 bytes
+Keys per prefix:    0
+RawSize:    968933.1 MB (estimated)
+FileSize:   492095.9 MB (estimated)
+Write rate: 10485760 bytes/second
+Read rate: 0 ops/second
+Compression: NoCompression
+Compression sampling rate: 0
+Memtablerep: SkipListFactory
+Perf Level: 1
+------------------------------------------------
+DB path: [/mnt/f2fs/db0]
+readwhilewriting :     348.336 micros/op 91859 ops/sec;   56.9 MB/s (6601693 of 10334999 found)
+
+Microseconds per read:
+Count: 330728968 Average: 348.3368  StdDev: 12.53
+Min: 2  Median: 289.4317  Max: 976044
+Percentiles: P25: 208.37 P50: 289.43 P75: 428.76 P99: 1470.19 P99.9: 3208.86 P99.99: 11016.65 P99.999 39730.77 P99.9999 412516.18
+------------------------------------------------------
+(       1,       2 ]        1   0.000%   0.000%
+(       2,       3 ]        2   0.000%   0.000%
+(       3,       4 ]       36   0.000%   0.000%
+(       4,       6 ]     2255   0.001%   0.001%
+(       6,      10 ]   102136   0.031%   0.032%
+(      10,      15 ]   193392   0.058%   0.090%
+(      15,      22 ]   362575   0.110%   0.200%
+(      22,      34 ]  2318569   0.701%   0.901%
+(      34,      51 ]  7168851   2.168%   3.068%
+(      51,      76 ] 12397774   3.749%   6.817% #
+(      76,     110 ]  6864704   2.076%   8.893%
+(     110,     170 ]  3550684   1.074%   9.966%
+(     170,     250 ] 103669168  31.346%  41.312% ######
+(     250,     380 ] 94732606  28.644%  69.955% ######
+(     380,     580 ] 68433011  20.692%  90.647% ####
+(     580,     870 ] 20407112   6.170%  96.817% #
+(     870,    1300 ]  6460566   1.953%  98.771%
+(    1300,    1900 ]  2673205   0.808%  99.579%
+(    1900,    2900 ]  1010135   0.305%  99.884%
+(    2900,    4400 ]   249902   0.076%  99.960%
+(    4400,    6600 ]    65394   0.020%  99.980%
+(    6600,    9900 ]    29981   0.009%  99.989%
+(    9900,   14000 ]    14085   0.004%  99.993%
+(   14000,   22000 ]    14109   0.004%  99.997%
+(   22000,   33000 ]     4874   0.001%  99.999%
+(   33000,   50000 ]     1348   0.000%  99.999%
+(   50000,   75000 ]      519   0.000%  99.999%
+(   75000,  110000 ]      464   0.000% 100.000%
+(  110000,  170000 ]      424   0.000% 100.000%
+(  170000,  250000 ]      319   0.000% 100.000%
+(  250000,  380000 ]      394   0.000% 100.000%
+(  380000,  570000 ]      247   0.000% 100.000%
+(  570000,  860000 ]      110   0.000% 100.000%
+(  860000, 1200000 ]       16   0.000% 100.000%
+
+{
+  "critical_warning":0,
+  "temperature":315,
+  "avail_spare":100,
+  "spare_thresh":10,
+  "percent_used":3,
+  "endurance_grp_critical_warning_summary":0,
+  "data_units_read":1429180357.0,
+  "data_units_written":1626295349.0,
+  "host_read_commands":5437580261.0,
+  "host_write_commands":15186213021.0,
+  "controller_busy_time":43095.0,
+  "power_cycles":4.0,
+  "power_on_hours":6976.0,
+  "unsafe_shutdowns":2.0,
+  "media_errors":0.0,
+  "num_err_log_entries":135940.0,
+  "warning_temp_time":0,
+  "critical_comp_time":0,
+  "temperature_sensor_1":312,
+  "temperature_sensor_2":311,
+  "temperature_sensor_3":316,
+  "thm_temp1_trans_count":0,
+  "thm_temp2_trans_count":0,
+  "thm_temp1_total_time":0,
+  "thm_temp2_total_time":0
+}
+Test duration 1h 0m 12s
