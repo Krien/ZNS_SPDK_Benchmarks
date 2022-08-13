@@ -2,83 +2,88 @@ import matplotlib.pyplot as plt
 
 def smartbytes(x): return 1000 * 512 * x
 
-fig, ax = plt.subplots()
-labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
-values = [smartbytes(x)
-          for x in [(292683188 - 266104226), (355291774 - 325882293)]] + [14872983864320]
-plt.bar(labs, [value/(1000000000*1016) for value in values],
+def savefig(fig, name):
+    fig.savefig(name + ".png")
+    fig.savefig(name + ".svg")
+
+def plot_write_amplification(title, name, labs, values, number_of_vals):
+    fig, ax = plt.subplots()
+    plt.bar(labs, [value/number_of_vals for value in values],
         width=0.4)
-plt.ylim(0, 30)
-ax.set_ylabel("Write amplification (avg)")
-plt.title("FillRandom 1TB: Average WA for each key-value pair")
-plt.savefig("out/barplot_writes_per_put_fillrandom.png")
-plt.savefig("out/barplot_writes_per_put_fillrandom.svg")
-plt.close()
+    plt.ylim(0, 30)
+    ax.set_ylabel("Write amplification (avg)")
+    plt.title(title)
+    savefig(plt, "out/" + name)
+    plt.close()
+
+def plot_write_amplification_fillrandom():
+    labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
+    values = [smartbytes(x)
+        for x in [(1593186755 - 1566705121), (1530804210 - 1501618568)]] + [14872983864320]
+    plot_write_amplification('FillRandom 1TB: Average WA for each key-value pair', 'barplot_writes_per_put_fillrandom',
+        labs, values, 1000000000*1016)
+
+def plot_write_amplification_fillrandom_L0_circular_log():
+    labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
+    values = [14641582881280, 14872983864320, 16876890434560]
+    plot_write_amplification('FillRandom 1TB TropoDB: Average WA for each key-value pair', 'barplot_writes_per_put_fillrandom_tropoDB_L0',
+        labs, values, 1000000000*1016)
+
+def plot_write_amplification_filloverwrite():
+    labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
+    values = [smartbytes(x)
+          for x in [(1624911408 - 1593186755), (1565335235 - 1530804210)]] + [21261503265792]
+    plot_write_amplification('FillOverwrite 1TB: Average WA for each key-value pai', 'barplot_writes_per_put_overwrite',
+        labs, values, 1000000000*1016)
+
+def plot_write_amplification_filloverwrite_L0_circular_log():
+    labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
+    values = [23341811976704, 21261503265792, 28887225376768]
+    plot_write_amplification('FillOverwrite 1TB TropoDB: Average WA for each key-value pair', 'barplot_writes_per_put_filloverwrite_tropoDB_L0',
+        labs, values, 1000000000*1016)
 
 
-fig, ax = plt.subplots()
-labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
-values = [14641582881280, 14872983864320, 16876890434560]
-plt.bar(labs, [value/(1000000000*1016) for value in values],
-        width=0.4)
-plt.ylim(0, 30)
-ax.set_ylabel("Write amplification (avg)")
-plt.title("FillRandom 1TB TropoDB: Average WA for each key-value pair")
-plt.savefig("out/barplot_writes_per_put_fillrandom_tropoDB_L0.png")
-plt.savefig("out/barplot_writes_per_put_fillrandom_tropoDB_L0.svg")
-plt.close()
+def plot_reset_count(title, name, labs, values):
+    fig, ax = plt.subplots()
+    plt.bar(labs, values, width=0.4)
+    plt.ylim(0, 30000)
+    ax.set_ylabel("Resets")
+    plt.title(title)
+    savefig(plt, "out/" + name)
+    plt.close()
 
-fig, ax = plt.subplots()
-labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
-values = [13686, 13866, 15463]
-plt.bar(labs, values,
-        width=0.4)
-plt.ylim(0, 30000)
-ax.set_ylabel("Resets")
-plt.title("FillRandom 1TB TropoDB: Total number of resets issued")
-plt.savefig("out/barplot_resets_per_put_fillrandom_tropoDB_L0.png")
-plt.savefig("out/barplot_resets_per_put_fillrandom_tropoDB_L0.svg")
-plt.close()
+def plot_resets_fillrandom_L0():
+    labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
+    values = [10898, 12369, 13866]
+    plot_reset_count('FillRandom 1TB: Total number of resets issued', 'barplot_resets_per_put_fillrandom',
+        labs, values)
 
 
+def plot_resets_fillrandom_L0_circular_log():
+    labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
+    values = [13686, 13866, 15463]
+    plot_reset_count('FillRandom 1TB TropoDB: Total number of resets issued', 'barplot_resets_per_put_fillrandom_tropoDB_L0',
+        labs, values)
 
-fig, ax = plt.subplots()
-labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
-values = [smartbytes(x)
-          for x in [(324515798 - 292683188), (389576975 - 355291774)]] + [21261503265792]
-plt.bar(labs, [value/(1000000000*1016) for value in values],
-        width=0.4)
-plt.ylim(0, 30)
-ax.set_ylabel("Write amplification (avg)")
-plt.title(
-    "FillOverwrite 1TB: Average WA for each key-value pair")
-plt.savefig("out/barplot_writes_per_put_overwrite.png")
-plt.savefig("out/barplot_writes_per_put_overwrite.svg")
-plt.close()
+def plot_resets_filloverwrite_L0():
+    labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
+    values = [14101, 15698, 20826]
+    plot_reset_count('FillOverwrite 1TB: Total number of resets issued', 'barplot_resets_per_put_filloverwrite',
+        labs, values)
 
-
-fig, ax = plt.subplots()
-labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
-values = [23341811976704, 21261503265792, 28887225376768]
-plt.bar(labs, [value/(1000000000*1016) for value in values],
-        width=0.4)
-plt.ylim(0, 30)
-ax.set_ylabel("Write amplification (avg)")
-plt.title("FillOverwrite 1TB TropoDB: Average WA for each key-value pair")
-plt.savefig("out/barplot_writes_per_put_filloverwrite_tropoDB_L0.png")
-plt.savefig("out/barplot_writes_per_put_filloverwrite_tropoDB_L0.svg")
-plt.close()
+def plot_resets_filloverwrite_L0_circular_log():
+    labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
+    values = [22732, 20826, 28344]
+    plot_reset_count('FillOverwrite 1TB TropoDB: Total number of resets issued', 'barplot_resets_per_put_filloverwrite_tropoDB_L0',
+        labs, values)
 
 
-
-fig, ax = plt.subplots()
-labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
-values = [22732, 20826, 28344]
-plt.bar(labs, values,
-        width=0.4)
-plt.ylim(0, 30000)
-ax.set_ylabel("Resets")
-plt.title("FillOverwrite 1TB TropoDB: Total number of resets issued")
-plt.savefig("out/barplot_resets_per_put_filloverwrite_tropoDB_L0.png")
-plt.savefig("out/barplot_resets_per_put_filloverwrite_tropoDB_L0.svg")
-plt.close()
+if __name__ == "__main__":
+    plot_write_amplification_fillrandom()
+    plot_write_amplification_fillrandom_L0_circular_log()
+    plot_write_amplification_filloverwrite()
+    plot_write_amplification_filloverwrite_L0_circular_log()
+    plot_resets_fillrandom_L0()
+    plot_resets_fillrandom_L0_circular_log()
+    plot_resets_filloverwrite_L0()
+    plot_resets_filloverwrite_L0_circular_log()

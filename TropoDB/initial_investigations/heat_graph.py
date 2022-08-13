@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # sns.set_theme()
 
 y = []
-with open('data/heat/reset_distr.json', 'r') as file:
+with open('../data/heat/reset_distr.json', 'r') as file:
     y = json.load(file)['reset']
 
 x = [i for i in range(len(y))]
@@ -84,7 +84,7 @@ for part in parts:
     fig.savefig("out/heat" + part["name"] + ".png")
     plt.close()
 
-with open('data/heat/write_distr.json', 'r') as file:
+with open('../data/heat/write_distr.json', 'r') as file:
     y = json.load(file)['written']
 
 x = [i for i in range(len(y))]
