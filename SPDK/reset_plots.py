@@ -64,6 +64,7 @@ def plot_2D():
 
     plt.savefig("out/zone_reset_2D-heatmap.pdf", bbox_inches="tight")
     plt.savefig("out/zone_reset_2D-heatmap.png", bbox_inches="tight")
+    plt.savefig("out/zone_reset_2D-heatmap.svg", bbox_inches="tight")
     plt.clf()
 
 def plot_simple():
@@ -82,6 +83,7 @@ def plot_simple():
     plt.ylabel("Latency (usec)")
     plt.savefig("out/zone_reset_simple_plot.pdf", bbox_inches="tight")
     plt.savefig("out/zone_reset_simple_plot.png", bbox_inches="tight")
+    plt.savefig("out/zone_reset_simple_plot.svg", bbox_inches="tight")
     plt.clf()
 
 if __name__ == "__main__":
