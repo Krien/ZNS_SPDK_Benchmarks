@@ -29,6 +29,12 @@ def plot_write_amplification_fillrandom_L0_circular_log():
     plot_write_amplification('FillRandom 1TB TropoDB: Average WA for each key-value pair', 'barplot_writes_per_put_fillrandom_tropoDB_L0',
         labs, values, 1000000000*1016)
 
+def plot_write_amplification_fillrandom_higher_concurrency():
+    labs = ["Concurrency level 1", "Concurrency level 2"]
+    values = [14872983864320, 14389997264896]
+    plot_write_amplification('FillRandom 1TB TropoDB: Average WA for each key-value pair', 'barplot_writes_per_put_fillrandom_tropoDB_concurrency',
+        labs, values, 1000000000*1016)
+
 def plot_write_amplification_filloverwrite():
     labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
     values = [smartbytes(x)
@@ -42,12 +48,18 @@ def plot_write_amplification_filloverwrite_L0_circular_log():
     plot_write_amplification('FillOverwrite 1TB TropoDB: Average WA for each key-value pair', 'barplot_writes_per_put_filloverwrite_tropoDB_L0',
         labs, values, 1000000000*1016)
 
+def plot_write_amplification_filloverwrite_higher_concurrency():
+    labs = ["Concurrency level 1", "Concurrency level 2"]
+    values = [21261503265792, 22833857610752]
+    plot_write_amplification('FillOverwrite 1TB TropoDB: Average WA for each key-value pair', 'barplot_writes_per_put_filloverwrite_tropoDB_concurrency',
+        labs, values, 1000000000*1016)
+
 
 def plot_reset_count(title, name, labs, values):
     fig, ax = plt.subplots()
-    plt.bar(labs, values, width=0.4)
-    plt.ylim(0, 30000)
-    ax.set_ylabel("Resets")
+    plt.bar(labs, [value/1000000000 for value in values], width=0.4)
+    plt.ylim(0, 5 * 10**(-5))
+    ax.set_ylabel("Resets (normalised)")
     plt.title(title)
     savefig(plt, "out/" + name)
     plt.close()
@@ -55,35 +67,51 @@ def plot_reset_count(title, name, labs, values):
 def plot_resets_fillrandom_L0():
     labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
     values = [10898, 12369, 13866]
-    plot_reset_count('FillRandom 1TB: Total number of resets issued', 'barplot_resets_per_put_fillrandom',
+    plot_reset_count('FillRandom 1TB: Number of resets', 'barplot_resets_per_put_fillrandom',
         labs, values)
 
 
 def plot_resets_fillrandom_L0_circular_log():
     labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
     values = [13686, 13866, 15463]
-    plot_reset_count('FillRandom 1TB TropoDB: Total number of resets issued', 'barplot_resets_per_put_fillrandom_tropoDB_L0',
+    plot_reset_count('FillRandom 1TB TropoDB: Number of resets', 'barplot_resets_per_put_fillrandom_tropoDB_L0',
+        labs, values)
+
+def plot_resets_fillrandom_higher_concurrency():
+    labs = ["Concurrency level 1", "Concurrency level 2"]
+    values = [13866, 13350]
+    plot_reset_count('FillRandom 1TB TropoDB: Total number of resets', 'barplot_resets_per_put_fillrandom_tropoDB_concurrency',
         labs, values)
 
 def plot_resets_filloverwrite_L0():
     labs = ["RocksDB + F2FS", "RocksDB + ZenFS", "TropoDB"]
     values = [14101, 15698, 20826]
-    plot_reset_count('FillOverwrite 1TB: Total number of resets issued', 'barplot_resets_per_put_filloverwrite',
+    plot_reset_count('FillOverwrite 1TB: Number of resets issued', 'barplot_resets_per_put_filloverwrite',
         labs, values)
 
 def plot_resets_filloverwrite_L0_circular_log():
     labs = ["L0 50 zones", "L0 100 zones", "L0 200 zones"]
     values = [22732, 20826, 28344]
-    plot_reset_count('FillOverwrite 1TB TropoDB: Total number of resets issued', 'barplot_resets_per_put_filloverwrite_tropoDB_L0',
+    plot_reset_count('FillOverwrite 1TB TropoDB: Number of resets', 'barplot_resets_per_put_filloverwrite_tropoDB_L0',
+        labs, values)
+
+def plot_resets_filloverwrite_higher_concurrency():
+    labs = ["Concurrency level 1", "Concurrency level 2"]
+    values = [20826, 22271]
+    plot_reset_count('FillOverwrite 1TB TropoDB: Number of resets', 'barplot_resets_per_put_filloverwrite_tropoDB_concurrency',
         labs, values)
 
 
 if __name__ == "__main__":
     plot_write_amplification_fillrandom()
     plot_write_amplification_fillrandom_L0_circular_log()
+    plot_write_amplification_fillrandom_higher_concurrency()
     plot_write_amplification_filloverwrite()
     plot_write_amplification_filloverwrite_L0_circular_log()
+    plot_write_amplification_filloverwrite_higher_concurrency()
     plot_resets_fillrandom_L0()
     plot_resets_fillrandom_L0_circular_log()
+    plot_resets_fillrandom_higher_concurrency()
     plot_resets_filloverwrite_L0()
     plot_resets_filloverwrite_L0_circular_log()
+    plot_resets_filloverwrite_higher_concurrency()

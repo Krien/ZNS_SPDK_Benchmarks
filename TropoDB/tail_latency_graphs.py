@@ -67,6 +67,26 @@ def plot_latency_fillrandom_L0_circular_log():
     plot_latency('Put Operation tail latency TropoDB: 1TB of fillrandom', 'latency_fillrandom_tropodb_l0', 
     [latency_random_L050, latency_random_L0100, latency_random_L0200])
 
+
+def plot_latency_fillrandom_higher_concurrency():
+    x = ['25%', '50%', '75%', '99%', '99.9%',
+        '99.99%', '99.999%', '99.9999%', '100%']
+    latency_random_parallelism_1 = {
+        'x': x,
+        'y':  [3.63,  4.78, 5.93, 899.42, 1285.15, 1846.76, 2896.25, 16646.15, 1083071035],
+        'marker': 'D',
+        'label': '1 WAL manager,  1 L0 log,   1 flush thread'
+    }
+    latency_random_parallelism_2 = {
+        'x': x,
+        'y':  [4.95,  6.00, 8.64, 949.26, 1292.57, 1855.82, 3536.08, 12806.88, 1020782861],
+        'marker': 'D',
+        'label': '2 WAL managers, 2 L0 logs, 2 flush threads'
+    }
+    plot_latency('Put Operation tail latency TropoDB: 1TB of fillrandom', 'latency_fillrandom_tropodb_concurrency', 
+    [latency_random_parallelism_1, latency_random_parallelism_2])
+
+
 def plot_latency_filloverwrite():
     x = ['25%', '50%', '75%', '99%', '99.9%',
         '99.99%', '99.999%', '99.9999%', '100%']
@@ -115,6 +135,25 @@ def plot_latency_filloverwrite_L0_circular_log():
     plot_latency('Put Operation tail latency TropoDB: 1TB of filloverwrite', 'latency_filloverwrite_tropodb_l0', 
     [latency_overwrite_L050, latency_overwrite_L0100, latency_overwrite_L0200])
 
+def plot_latency_filloverwrite_higher_concurrency():
+    x = ['25%', '50%', '75%', '99%', '99.9%',
+        '99.99%', '99.999%', '99.9999%', '100%']
+    latency_random_parallelism_1 = {
+        'x': x,
+        'y':  [3.84,  5.00, 6.50, 1075.42, 1293.39, 1875.60, 3321.77, 16752.52, 1004201751],
+        'marker': 'D',
+        'label': '1 WAL manager,  1 L0 log,   1 flush thread'
+    }
+    latency_random_parallelism_2 = {
+        'x': x,
+        'y':  [4.94,  6.66, 8.75, 1117.89, 1297.96, 2072.20, 4060.90, 19825.98, 1429300830],
+        'marker': 'D',
+        'label': '2 WAL managers, 2 L0 logs, 2 flush threads'
+    }
+    plot_latency('Put Operation tail latency TropoDB: 1TB of filloverwrite', 'latency_filloverwrite_tropodb_concurrency', 
+    [latency_random_parallelism_1, latency_random_parallelism_2])
+
+
 def plot_latency_readwhilewriting():
     x = ['25%', '50%', '75%', '99%', '99.9%',
         '99.99%', '99.999%', '99.9999%', '100%']
@@ -136,6 +175,8 @@ def plot_latency_readwhilewriting():
 if __name__ == "__main__":
     plot_latency_fillrandom()
     plot_latency_fillrandom_L0_circular_log()
+    plot_latency_fillrandom_higher_concurrency()
     plot_latency_filloverwrite()
     plot_latency_filloverwrite_L0_circular_log()
+    plot_latency_filloverwrite_higher_concurrency()
     plot_latency_readwhilewriting()
