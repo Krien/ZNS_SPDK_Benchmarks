@@ -57,7 +57,6 @@ size=128z
 rw=read
 iodepth=1
 zonemode=zbd
-initial_zone_reset=1
 bs=4096
 EOF
 )

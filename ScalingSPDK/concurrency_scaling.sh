@@ -16,10 +16,10 @@ if [[ "$#" -ne 3 ]]; then
 fi
 
 # Run the tests
-if [[ "$1" -eq "r" ]]; then
+if [[ "$1" == "r" ]]; then
     ./concurrency_scaling_libaio_read.sh "$2" "$3" || exit 1;
     ./concurrency_scaling_SPDK_read.sh "$2" "$3" || exit 1;
-elif [[ "$1" -eq "w" ]]; then
+elif [[ "$1" == "w" ]]; then
     ./concurrency_scaling_libaio_write.sh "$2" "$3" || exit 1;
     ./concurrency_scaling_SPDK_write.sh "$2" "$3" || exit 1;
 fi 
