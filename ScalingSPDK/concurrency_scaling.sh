@@ -13,5 +13,5 @@ if [[ "$#" -ne 2 ]]; then
 fi
 
 # Run the tests
-./concurrency_scaling_libaio_write.sh $1 $2 || exit 1;
-./concurrency_scaling_SPDK_write.sh $1 $2 || exit 1;
+./concurrency_scaling_libaio_write.sh "$1" "$2" || exit 1;
+./concurrency_scaling_SPDK_write.sh "$1" "$2" || exit 1;
