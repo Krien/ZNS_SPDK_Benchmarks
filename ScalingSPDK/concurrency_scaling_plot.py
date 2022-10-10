@@ -10,14 +10,20 @@ def savefig(fig, name):
     fig.savefig(name + ".svg")
 
 
-def plotscale(scale, label, labelw):
+def plotscale(scale, dirr, label, labelw):
     kiops_libaio = []
     kiops_spdk = []
     if label == "write":
         kiops_spdk_append = []
     for i in range(scale):
         file_name = (
-            "./out/concurrency_scaling_" + label + "_spdk_" + str(i + 1) + ".json"
+            "./data/"
+            + dirr
+            + "/concurrency_scaling_"
+            + label
+            + "_spdk_"
+            + str(i + 1)
+            + ".json"
         )
         file = open(file_name, "r")
         data = file.read()
@@ -25,7 +31,13 @@ def plotscale(scale, label, labelw):
         kiops_spdk.append(int(data["jobs"][0][label]["iops"]) / 1000)
     for i in range(scale):
         file_name = (
-            "./out/concurrency_scaling_" + label + "_libaio_" + str(i + 1) + ".json"
+            "./data/"
+            + dirr
+            + "/concurrency_scaling_"
+            + label
+            + "_libaio_"
+            + str(i + 1)
+            + ".json"
         )
         file = open(file_name, "r")
         data = file.read()
@@ -34,7 +46,9 @@ def plotscale(scale, label, labelw):
     if label == "write":
         for i in range(scale):
             file_name = (
-                "./out/concurrency_scaling_"
+                "./data/"
+                + dirr
+                + "/concurrency_scaling_"
                 + "append"
                 + "_spdk_"
                 + str(i + 1)
@@ -63,20 +77,20 @@ def plotscale(scale, label, labelw):
     plt.ylabel("KIOPS")
     plt.title("KIOPS: " + labelw + " concurrently to 2 ZNS SSDs")
     plt.legend()
-    savefig(plt, "out/" + label)
+    savefig(plt, "out/" + label + dirr)
 
 
-def main(workload, scale):
+def main(workload, dirr, scale):
     if workload[0] == "w":
-        plotscale(scale, "write", "Writing")
+        plotscale(scale, dirr, "write", "Writing")
     elif workload[0] == "r":
-        plotscale(scale, "read", "Reading")
+        plotscale(scale, dirr, "read", "Reading")
     else:
         print("unknown workload")
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         print("not enough args")
         exit(-1)
-    main(sys.argv[1], int(sys.argv[2]))
+    main(sys.argv[1], sys.argv[2], int(sys.argv[3]))
