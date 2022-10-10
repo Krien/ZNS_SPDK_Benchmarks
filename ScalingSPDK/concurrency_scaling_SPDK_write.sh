@@ -3,7 +3,7 @@
 DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 cd $DIR
 
-if ! command -v fio &> /dev/null
+if ! command -v "$FIO_DIR/fio" &> /dev/null
 then
     echo "Please add fio to your path"
     exit 1
@@ -51,8 +51,8 @@ thread=1
 group_reporting=1
 direct=1
 time_based=1
-ramp_time=5
-runtime=60
+ramp_time=20
+runtime=180
 size=128z
 rw=write
 iodepth=1
@@ -94,7 +94,7 @@ echo "Running fio with $job_cnt jobs for each device"
 echo "job is:"
 echo "$(cat $jobname)"
 
-LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$SPDK_DIR/build/lib" LD_PRELOAD="$SPDK_DIR/build/fio/spdk_nvme" fio "$jobname" --output="./out/concurrency_scaling_write_spdk_${job_cnt}.json" --output-format="json"
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$SPDK_DIR/build/lib" LD_PRELOAD="$SPDK_DIR/build/fio/spdk_nvme" $FIO_DIR/fio "$jobname" --output="./out/concurrency_scaling_write_spdk_${job_cnt}.json" --output-format="json"
 done
 
 # Remove SPDK
