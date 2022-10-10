@@ -1,6 +1,6 @@
 #!/bin/bash
 DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
-cd $DIR
+cd "$DIR" || exit
 
 mkdir -p out
 mkdir -p tmp
@@ -22,4 +22,5 @@ if [[ "$1" == "r" ]]; then
 elif [[ "$1" == "w" ]]; then
     ./concurrency_scaling_libaio_write.sh "$2" "$3" || exit 1;
     ./concurrency_scaling_SPDK_write.sh "$2" "$3" || exit 1;
+    ./concurrency_scaling_SPDK_append.sh "$2" "$3" || exit 1;
 fi 
