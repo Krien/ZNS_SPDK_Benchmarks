@@ -8,5 +8,6 @@ Data is stored in `/data` images will be generated in `/out`. The command I ran 
 sudo ./concurrency_scaling.sh w 8 "nvme1n0,1 nvme1n1,1"
 sudo ./concurrency_scaling.sh r 8 "nvme1n0,1 nvme1n1,1"
 # and then on a second machine (scp) that comes with Python Matplotlib stuff
-python3 concurrency_scaling_plot.py 8
+python3 concurrency_scaling_plot.py w 8
+python3 concurrency_scaling_plot.py r 8
 ```
