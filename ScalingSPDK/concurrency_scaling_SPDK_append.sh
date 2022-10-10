@@ -94,7 +94,7 @@ echo "Running fio with $job_cnt jobs for each device"
 echo "job is:"
 echo "$(cat $jobname)"
 
-LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$SPDK_DIR/build/lib" LD_PRELOAD="$SPDK_DIR/build/fio/spdk_nvme" $FIO_DIR/fio "$jobname" --output="./out/concurrency_scaling_append_spdk_${job_cnt}.json" --output-format="json"
+LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$SPDK_DIR/build/lib" LD_PRELOAD="$SPDK_DIR/build/fio/spdk_nvme" $FIO_DIR/fio "$jobname" --output="./data/concurrency_scaling_append_spdk_${job_cnt}.json" --output-format="json"
 done
 
 # Remove SPDK

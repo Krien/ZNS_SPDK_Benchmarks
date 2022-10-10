@@ -76,7 +76,7 @@ done
 echo "Running fio with $job_cnt jobs for each device"
 echo "job is:"
 echo "$(cat $jobname)"
-$FIO_DIR/fio "$jobname" --output="./out/concurrency_scaling_read_libaio_${job_cnt}.json" --output-format="json"
+$FIO_DIR/fio "$jobname" --output="./data/concurrency_scaling_read_libaio_${job_cnt}.json" --output-format="json"
 done
 
 echo ""

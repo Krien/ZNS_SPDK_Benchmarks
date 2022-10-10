@@ -2,7 +2,7 @@
 DIR=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 cd "$DIR" || exit
 
-mkdir -p out
+mkdir -p data
 mkdir -p tmp
 
 if [[ "$#" -ne 3 ]]; then
