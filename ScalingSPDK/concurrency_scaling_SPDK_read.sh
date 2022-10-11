@@ -52,8 +52,7 @@ group_reporting=1
 direct=1
 time_based=1
 ramp_time=20
-runtime=180
-size=128z
+runtime=300
 rw=read
 iodepth=1
 zonemode=zbd
@@ -61,7 +60,8 @@ bs=4096
 EOF
 )
 jobworker=$(cat <<'EOF'
-offset_increment=128z
+offset_increment=400z
+size=400z
 EOF
 )
 echo "$jobglob" > $jobname
